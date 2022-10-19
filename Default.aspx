@@ -16,7 +16,7 @@
                 <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
 
                 <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
+                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more. Or Don't. &raquo;</a>
                 </p>
             </div>
             <div class="col-md-4">
