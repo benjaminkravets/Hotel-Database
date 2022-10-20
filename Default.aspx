@@ -8,12 +8,14 @@
             <div class="col-md-4">
 
                 <h3 class="lead">Check Availability</h3>
-                <h2>Check In</h2>
+                <h2>Select Arrival and Departure</h2>
 
                 <asp:calendar id="Calendar1" runat="server" onselectionchanged="Calendar1_SelectionChanged" OnPreRender="Calendar_1_on_load" OnDayRender="Calendar1_OnDayRender"></asp:calendar>
 
                 <h5>&nbsp</h5>
                 <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                <h5>&nbsp</h5>
+                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
 
                 <p>
                     <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more. &raquo;</a>
@@ -25,8 +27,7 @@
                 <h2>Check Out</h2>
                 <asp:Calendar ID="Calendar2" runat="server" OnSelectionChanged="Calendar2_SelectionChanged" ></asp:Calendar>
                 
-                <h5>&nbsp</h5>
-                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                
 
                 <p>
                     <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>

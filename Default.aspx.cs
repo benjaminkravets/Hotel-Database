@@ -1,56 +1,35 @@
 ﻿using System;
-using System.Linq;
 using System.Web.UI;
 using MySql.Data.MySqlClient;
-using System.Collections.Generic;
 
 namespace hotelclient
 {
     public partial class _Default : Page
     {
-        public int dateSelector = 0;
+        //public int dateSelector = 0;
         public DateTime[] selectedDates = new DateTime[2];
-        protected void gas()
-        {
-            // Storing email to Session variable
-            Session["email"] = Calendar1.SelectedDate;
-            
 
-
-            // Checking Session variable is not empty
-            if (Session["email"] != null)
-            {
-                // Displaying stored email
-                //Label3.Text = "This email is stored to the session.";
-                //Label4.Text = Session["email"].ToString();
-            }
-        }
         
+
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-            
         }
 
         protected void Calendar1_OnDayRender(object Sender, System.Web.UI.WebControls.DayRenderEventArgs e)
         {
             for (int i = 0; i < selectedDates.Length; i++)
             {
-               
-               // if (e.Day.Date.CompareTo(Session["checkin"]) == 0 || 
-                //    e.Day.Date.CompareTo(Session["checkout"]) == 0)
-                if (Convert.ToDateTime(Session["checkout"]) > e.Day.Date && e.Day.Date > Convert.ToDateTime(Session["checkin"])) 
+                
+                if (Convert.ToDateTime(Session["checkout"]) > e.Day.Date && e.Day.Date > Convert.ToDateTime(Session["checkin"]))
                 {
                     e.Cell.BackColor = System.Drawing.Color.DarkGreen;
                 }
             }
-            //System.Diagnostics.Debug.WriteLine(selectedDates.Length);
+            
         }
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
-            
-
             if (Session["index"] == null)
             {
                 Session["index"] = 0;
@@ -68,7 +47,6 @@ namespace hotelclient
             if (Convert.ToInt32(Session["index"]) == 0)
             {
                 Session["checkin"] = Calendar1.SelectedDate;
-                
             }
             else
             {
@@ -81,21 +59,15 @@ namespace hotelclient
                 Session["temp"] = Session["checkin"];
                 Session["checkin"] = Session["checkout"];
                 Session["checkout"] = Session["temp"];
-                
             }
-                    
 
-
-
-            TextBox3.Text = (Calendar1.SelectedDate.ToShortDateString()).ToString();
-            
-            
+            //TextBox3.Text = (Calendar1.SelectedDate.ToShortDateString()).ToString();
+            if (Session["checkout"] != null) { TextBox2.Text = Session["checkout"].ToString(); }
+            if (Session["checkin"] != null) { TextBox3.Text = Session["checkin"].ToString(); }
+            TextBox2.Text = Convert.ToDateTime(Session["checkout"]).ToString();
 
             //Calendar1.TodayDayStyle.ForeColor = System.Drawing.Color.Blue;
             //System.Diagnostics.Debug.WriteLine(Session["email"]);
-            
-            
-
 
             return;
 
