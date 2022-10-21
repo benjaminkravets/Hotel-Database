@@ -20,9 +20,10 @@ namespace hotelclient
             for (int i = 0; i < selectedDates.Length; i++)
             {
                 
-                if (Convert.ToDateTime(Session["checkout"]) > e.Day.Date && e.Day.Date > Convert.ToDateTime(Session["checkin"]))
+                if (Convert.ToDateTime(Session["checkout"]) >= e.Day.Date && e.Day.Date >= Convert.ToDateTime(Session["checkin"]))
                 {
                     e.Cell.BackColor = System.Drawing.Color.DarkGreen;
+                    
                 }
             }
             
