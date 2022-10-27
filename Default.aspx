@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="hotelclient._Default" %>
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
@@ -7,42 +8,42 @@
         <div class="row">
             <div class="col-md-4">
 
-                <h3 class="lead">Check Availability</h3>
-                <h2>Select Arrival and Departure</h2>
+                <h3 class="lead">&nbsp;</h3>
+                <h2>Select Arrival and Departure &nbsp</h2>
 
-                <asp:calendar id="Calendar1" runat="server" onselectionchanged="Calendar1_SelectionChanged" OnPreRender="Calendar_1_on_load" OnDayRender="Calendar1_OnDayRender"></asp:calendar>
+                <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" OnPreRender="Calendar_1_on_load" OnDayRender="Calendar1_OnDayRender"></asp:Calendar>
 
-                <h5>&nbsp</h5>
+                <h5>&nbsp;</h5>
                 <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
-                <h5>&nbsp</h5>
+                <h5>&nbsp;</h5>
                 <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
 
                 <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more. &raquo;</a>
                 </p>
             </div>
+
             <div class="col-md-4">
-
-                <h3 class="lead">&nbsp</h3>
-                <h2>Check Out</h2>
-                <asp:Calendar ID="Calendar2" runat="server" OnSelectionChanged="Calendar2_SelectionChanged" ></asp:Calendar>
-                
-                
-
+                <h3 class="lead">&nbsp;</h3>
+                <h3 class="lead">&nbsp;</h3>
+                    <h3 class="lead">&nbsp;</h3>
+                <h3 class="lead">&nbsp;</h3>
+                    <h3 class="lead">&nbsp;</h3>
                 <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-                </p>
-            </div>
-            <div class="col-md-4">
-                <h3 class="lead">&nbsp</h3>
-                
 
-                <p>
-                    
                     <asp:TextBox ID="TextBox4" runat="server" placeholder="Zip Code"></asp:TextBox>
-                    <asp:Button ID="check_availability" runat="server" OnClick="check_availability_Click" Text="Button" />
-                    <h5>&nbsp</h5>
-                    <a class="btn btn-default" >Check Availability &raquo;</a>
+                    
+                </p>
+                <h5>
+                    
+                        <asp:Button ID="check_availablity" runat="server" OnClick="check_availablity_Click" Text="Check Availability" />
+                    </h5>
+            </div>
+            <div class="col-md-4">
+
+                <h3 class="lead">&nbsp;</h3>
+
+                <p>
+                    <asp:ListBox ID="available_hotels" runat="server" Height="100%" Width="100%"></asp:ListBox>
                 </p>
             </div>
         </div>
