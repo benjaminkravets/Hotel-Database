@@ -9,6 +9,7 @@ create table hotel (
     address VARCHAR(50) NOT NULL,
     city VARCHAR(20) NOT NULL,
     state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL,
     phone_number VARCHAR(10) NOT NULL,
     fax_number VARCHAR(10),
     check_in_time TIME,
@@ -85,6 +86,32 @@ create table hotel_feature_list (
     braille_elevator BOOLEAN,
     crib_available BOOLEAN,
     cot_available BOOLEAN
+);
+
+create table common_destination (
+	destination_pk INT PRIMARY KEY,
+	destination_name varchar(50),
+    address VARCHAR(50) NOT NULL,
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL,
+    description varchar(500),
+    destination_type varchar(40),
+    CONSTRAINT chk_type CHECK (destination_type IN ('military_base', 'museum', 'school', 'airport', 'amusement_park', 'ski_resort'))
+);
+
+create table destination_proximity (
+	proximity_pk INT PRIMARY KEY,
+    destination_pk INT PRIMARY KEY,
+    FOREIGN KEY (destination_pk) 
+		REFERENCES common_destination(destination_pk)
+        ON DELETE CASCADE,
+	hotel_pk int PRIMARY KEY,
+    FOREIGN KEY (hotel_pk) 
+		REFERENCES hotel(hotel_pk)
+        ON DELETE CASCADE,
+	distance DECIMAL(5,2)
+	
 );
 
 insert into hotel VALUES ('1', 'Parkway East', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
