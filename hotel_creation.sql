@@ -114,7 +114,7 @@ create table destination_proximity (
 	
 );
 
-insert into hotel VALUES ('1', 'Parkway Eas', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
+insert into hotel VALUES ('1', 'Parkway East', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
 insert into suite values ('1', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, '2', '2', '2', FALSE);
 insert into billing_multiplier_list values ('1', '1.05', '1.03', '30', '20', '100', '70', '.90', '.90', '.85', '.90', '.90');
 
