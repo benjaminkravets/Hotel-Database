@@ -134,9 +134,10 @@ create table reservation (
     room_cleaning_freq INT,
     guest_count INT,
     check_in_complete BOOLEAN,
-    check_out_complete
+    check_out_complete BOOLEAN
 )
 
+insert into reservation VALUES ('1', '1', '1', '101', '11/20/2001 2:00', '11/21/2001', NULL, '1', '2', 'FALSE', 'FALSE')
 insert into hotel VALUES ('1', 'Parkway East', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
 insert into suite values ('1', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, '2', '2', '2', FALSE);
 insert into billing_multiplier_list values ('1', '1.05', '1.03', '30', '20', '100', '70', '.90', '.90', '.85', '.90', '.90');
