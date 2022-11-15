@@ -141,7 +141,7 @@ create table payment (
     payment_pk INT PRIMARY KEY,
     reservation_pk INT PRIMARY KEY,
     FOREIGN KEY (reservation_pk)
-        REFERENCES reservation(reservation_pk)
+        REFERENCES reservation(reservation_pk),
     payment_method_pk INT,
     FOREIGN KEY (payment_method_pk)
         REFERENCES payment_method(payment_method_pk),
@@ -153,12 +153,24 @@ create table payment_method (
     payment_method_pk INT PRIMARY KEY,
     member_pk INT PRIMARY KEY,
     FOREIGN KEY member_pk 
-        REFERENCES member(member_pk)
+        REFERENCES member(member_pk),
     credit_card_number VARCHAR(16),
     expiration_date DATETIME,
     security_code INT(3)
 
 )
+
+create table franchise {
+    franchise_pk INT PRIMARY KEY,
+    hotel_pk INT PRIMARY KEY,
+    FOREIGN KEY hotel_pk 
+        REFERENCES hotel(hotel_pk),
+    franchise_name VARCHAR(50),
+    contact_name VARCHAR(50),
+    phone_number VARCHAR(11),
+    email VARCHAR(40),
+    fax_number varchar(11)
+}
 
 insert into reservation VALUES ('1', '1', '1', '101', '11/20/2001 2:00', '11/21/2001', NULL, '1', '2', 'FALSE', 'FALSE')
 insert into hotel VALUES ('1', 'Parkway East', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
