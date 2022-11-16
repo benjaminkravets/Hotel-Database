@@ -178,19 +178,40 @@ create table employee {
     FOREIGN KEY franchise_pk
         REFERENCES franchise(franchise_pk),
     role_pk INT,
+    FOREIGN KEY role_pk
+        REFERENCES employee_role(role_pk),
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     phone_number VARCHAR(11),
     email VARCHAR(40)
 }
 
-create table role {
+create table employee_role {
     role_pk INT PRIMARY KEY,
     role_title VARCHAR(30),
     department VARCHAR(30),
     CONSTRAINT chk_dept CHECK (department IN ('management', 'cleaning', 'finance', 'clerk', 'maintainance')),
-    rol_dec VARCHAR(50)
+    rol_description VARCHAR(50)
 }
+
+create table benefit_package {
+    employee_pk INT PRIMARY KEY,
+    FOREIGN KEY employee_pk
+        REFERENCES employee(employee_pk),
+    salary INT,
+    hourly BOOLEAN,
+    health_insurance INT,
+    paid_leave_days DECIMAL(4,1),
+    vacation_days DECIMAL(4,1),
+    contracted BOOLEAN,
+    401k_withholding DECIMAL(2,1),
+    401k_contribution DECIMAL(2,1),
+    fica_withholding DECIMAL(2,1),
+    futa_withholding DECIMAL(2,1),
+    suta_withholding DECIMAL(2,1)
+}
+
+create table 
 
 insert into reservation VALUES ('1', '1', '1', '101', '11/20/2001 2:00', '11/21/2001', NULL, '1', '2', 'FALSE', 'FALSE')
 insert into hotel VALUES ('1', 'Parkway East', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
