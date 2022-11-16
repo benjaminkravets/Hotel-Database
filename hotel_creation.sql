@@ -177,10 +177,19 @@ create table employee {
     franchise_pk INT PRIMARY KEY,
     FOREIGN KEY franchise_pk
         REFERENCES franchise(franchise_pk),
+    role_pk INT,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     phone_number VARCHAR(11),
     email VARCHAR(40)
+}
+
+create table role {
+    role_pk INT PRIMARY KEY,
+    role_title VARCHAR(30),
+    department VARCHAR(30),
+    CONSTRAINT chk_dept CHECK (department IN ('management', 'cleaning', 'finance', 'clerk', 'maintainance')),
+    rol_dec VARCHAR(50)
 }
 
 insert into reservation VALUES ('1', '1', '1', '101', '11/20/2001 2:00', '11/21/2001', NULL, '1', '2', 'FALSE', 'FALSE')
