@@ -172,6 +172,17 @@ create table franchise {
     fax_number varchar(11)
 }
 
+create table employee {
+    employee_pk INT PRIMARY KEY,
+    franchise_pk INT PRIMARY KEY,
+    FOREIGN KEY franchise_pk
+        REFERENCES franchise(franchise_pk),
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
+    phone_number VARCHAR(11),
+    email VARCHAR(40)
+}
+
 insert into reservation VALUES ('1', '1', '1', '101', '11/20/2001 2:00', '11/21/2001', NULL, '1', '2', 'FALSE', 'FALSE')
 insert into hotel VALUES ('1', 'Parkway East', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
 insert into suite values ('1', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, '2', '2', '2', FALSE);
