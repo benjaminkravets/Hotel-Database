@@ -211,7 +211,26 @@ create table benefit_package {
     suta_withholding DECIMAL(2,1)
 }
 
-create table 
+create table customer {
+    customer_pk INT PRIMARY KEY,
+    email VARCHAR(40),
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
+    phone_number VARCHAR(11),
+    is_member BOOLEAN
+}
+
+
+
+create table member {
+    member_pk INT PRIMARY KEY,
+    customer_pk INT PRIMARY KEY,
+    FOREIGN KEY customer_pk 
+        REFERENCES customer(customer_pk),
+    member_level VARCHAR(10),
+    CONSTRAINT chk_member_level CHECK (member_level IN ('bronze', 'silver', 'gold', 'platinum', 'diamond')),
+    points INT
+}
 
 insert into reservation VALUES ('1', '1', '1', '101', '11/20/2001 2:00', '11/21/2001', NULL, '1', '2', 'FALSE', 'FALSE')
 insert into hotel VALUES ('1', 'Parkway East', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
