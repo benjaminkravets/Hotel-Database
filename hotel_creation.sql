@@ -248,6 +248,41 @@ create table hotel_review {
         REFERENCES photo_set_path(photo_set_path_pk)
 }
 
+create table travel_agent {
+    travel_agent_pk INT PRIMARY KEY,
+    travel_agency_pk INT PRIMARY KEY,
+    FOREIGN KEY travel_agency_pk
+        REFERENCES travel_agency(travel_agency_pk),
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL,
+    phone_number VARCHAR(10) NOT NULL,
+    fax_number VARCHAR(10),
+    address VARCHAR(50) NOT NULL,
+}
+
+create table travel_agency {
+    travel_agency_pk INT PRIMARY KEY,
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL,
+    phone_number VARCHAR(10) NOT NULL,
+    fax_number VARCHAR(10),
+    address VARCHAR(50) NOT NULL,
+}
+
+create table photo_set_path {
+    photo_set_path_pk INT PRIMARY,
+    FOREIGN KEY photo_set_path_pk 
+        REFERENCES hotel_review(photo_set_path_pk),
+    image_1_path VARCHAR(255) NOT NULL,
+    image_2_path VARCHAR(255) NOT NULL,
+    image_3_path VARCHAR(255) NOT NULL,
+    image_4_path VARCHAR(255) NOT NULL,
+    image_5_path VARCHAR(255) NOT NULL
+
+}
+
 insert into reservation VALUES ('1', '1', '1', '101', '11/20/2001 2:00', '11/21/2001', NULL, '1', '2', 'FALSE', 'FALSE')
 insert into hotel VALUES ('1', 'Parkway East', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
 insert into suite values ('1', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, '2', '2', '2', FALSE);
