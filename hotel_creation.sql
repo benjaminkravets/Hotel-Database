@@ -3,7 +3,6 @@ DROP DATABASE IF EXISTS hotel_sys;
 create database hotel_sys;
 use hotel_sys;
 
-
 create table hotel (
 	hotel_pk int PRIMARY KEY,
     address VARCHAR(50) NOT NULL,
@@ -17,8 +16,11 @@ create table hotel (
     hotel_rating DECIMAL(2,1),
     time_zone VARCHAR(4)
 );
+
 create table suite (
-	hotel_pk INT PRIMARY KEY,
+	suite_pk INT,
+	hotel_pk INT,
+    PRIMARY KEY(suite_pk, hotel_pk),
     FOREIGN KEY (hotel_pk) 
 		REFERENCES hotel(hotel_pk)
         ON DELETE CASCADE,
@@ -37,8 +39,8 @@ create table suite (
     is_reserved_temp BOOLEAN,
     couch BOOLEAN,
     couch_converts BOOLEAN
-    
 );
+
 create table billing_multiplier_list (
 	hotel_pk INT PRIMARY KEY,
     FOREIGN KEY (hotel_pk) 
@@ -56,6 +58,7 @@ create table billing_multiplier_list (
     government_discount DECIMAL (4,3),
     veteren_discount DECIMAL (4,3)
 );
+
 create table hotel_feature_list (
 	allows_pets BOOLEAN,
     allows_smoking BOOLEAN,
@@ -102,11 +105,11 @@ create table common_destination (
 
 create table destination_proximity (
 	proximity_pk INT PRIMARY KEY,
-    destination_pk INT PRIMARY KEY,
+    destination_pk INT,
     FOREIGN KEY (destination_pk) 
 		REFERENCES common_destination(destination_pk)
         ON DELETE CASCADE,
-	hotel_pk int PRIMARY KEY,
+	hotel_pk INT,
     FOREIGN KEY (hotel_pk) 
 		REFERENCES hotel(hotel_pk)
         ON DELETE CASCADE,
@@ -114,17 +117,27 @@ create table destination_proximity (
 	
 );
 
+create table customer (
+    customer_pk INT PRIMARY KEY,
+    email VARCHAR(40),
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
+    phone_number VARCHAR(11),
+    is_member BOOLEAN
+);
+
 create table reservation (
-    reservation_pk INT PRIMARY KEY,
-    hotel_pk INT PRIMARY KEY,
+    reservation_pk INT,
+    hotel_pk INT,
+    PRIMARY KEY(reservation_pk, hotel_pk, suite_pk, customer_pk),
     FOREIGN KEY (hotel_pk)
         REFERENCES hotel(hotel_pk)
         ON DELETE CASCADE,
-    customer_pk INT PRIMARY KEY,
+    customer_pk INT,
     FOREIGN KEY (customer_pk)
         REFERENCES customer(customer_pk)
         ON DELETE CASCADE,
-    suite_pk INT PRIMARY KEY,
+    suite_pk INT,
     FOREIGN KEY (suite_pk)
         REFERENCES suite(suite_pk)
         ON DELETE CASCADE,
@@ -135,11 +148,35 @@ create table reservation (
     guest_count INT,
     check_in_complete BOOLEAN,
     check_out_complete BOOLEAN
-)
+);
+
+create table member (
+    member_pk INT,
+    customer_pk INT,
+    PRIMARY KEY(member_pk, customer_pk),
+    FOREIGN KEY (customer_pk) 
+        REFERENCES customer(customer_pk),
+    member_level VARCHAR(10),
+    CONSTRAINT chk_member_level CHECK (member_level IN ('bronze', 'silver', 'gold', 'platinum', 'diamond')),
+    points INT
+);
+
+create table payment_method (
+    payment_method_pk INT,
+    member_pk INT,
+    PRIMARY KEY(payment_method_pk, member_pk),
+    FOREIGN KEY (member_pk) 
+        REFERENCES member(member_pk),
+    credit_card_number VARCHAR(16),
+    expiration_date DATETIME,
+    security_code INT
+
+);
 
 create table payment (
-    payment_pk INT PRIMARY KEY,
-    reservation_pk INT PRIMARY KEY,
+    payment_pk INT,
+    reservation_pk INT,
+    PRIMARY KEY(payment_pk, reservation_pk),
     FOREIGN KEY (reservation_pk)
         REFERENCES reservation(reservation_pk),
     payment_method_pk INT,
@@ -147,56 +184,47 @@ create table payment (
         REFERENCES payment_method(payment_method_pk),
     payment_complete BOOLEAN,
     price DECIMAL(6,2)
-)
+);
 
-create table payment_method (
-    payment_method_pk INT PRIMARY KEY,
-    member_pk INT PRIMARY KEY,
-    FOREIGN KEY member_pk 
-        REFERENCES member(member_pk),
-    credit_card_number VARCHAR(16),
-    expiration_date DATETIME,
-    security_code INT(3)
-
-)
-
-create table franchise {
-    franchise_pk INT PRIMARY KEY,
-    hotel_pk INT PRIMARY KEY,
-    FOREIGN KEY hotel_pk 
+create table franchise (
+    franchise_pk INT,
+    hotel_pk INT,
+    PRIMARY KEY(franchise_pk, hotel_pk),
+    FOREIGN KEY (hotel_pk) 
         REFERENCES hotel(hotel_pk),
     franchise_name VARCHAR(50),
     contact_name VARCHAR(50),
     phone_number VARCHAR(11),
     email VARCHAR(40),
     fax_number varchar(11)
-}
+);
 
-create table employee {
-    employee_pk INT PRIMARY KEY,
-    franchise_pk INT PRIMARY KEY,
-    FOREIGN KEY franchise_pk
-        REFERENCES franchise(franchise_pk),
-    role_pk INT,
-    FOREIGN KEY role_pk
-        REFERENCES employee_role(role_pk),
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    phone_number VARCHAR(11),
-    email VARCHAR(40)
-}
-
-create table employee_role {
+create table employee_role (
     role_pk INT PRIMARY KEY,
     role_title VARCHAR(30),
     department VARCHAR(30),
     CONSTRAINT chk_dept CHECK (department IN ('management', 'cleaning', 'finance', 'clerk', 'maintainance')),
     rol_description VARCHAR(50)
-}
+);
 
-create table benefit_package {
+create table employee (
+    employee_pk INT,
+    franchise_pk INT,
+    PRIMARY KEY(employee_pk, franchise_pk),
+    FOREIGN KEY (franchise_pk)
+        REFERENCES franchise(franchise_pk),
+    role_pk INT,
+    FOREIGN KEY (role_pk)
+        REFERENCES employee_role(role_pk),
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
+    phone_number VARCHAR(11),
+    email VARCHAR(40)
+);
+
+create table benefit_package (
     employee_pk INT PRIMARY KEY,
-    FOREIGN KEY employee_pk
+    FOREIGN KEY (employee_pk)
         REFERENCES employee(employee_pk),
     salary INT,
     hourly BOOLEAN,
@@ -209,79 +237,59 @@ create table benefit_package {
     fica_withholding DECIMAL(2,1),
     futa_withholding DECIMAL(2,1),
     suta_withholding DECIMAL(2,1)
-}
+);
 
-create table customer {
-    customer_pk INT PRIMARY KEY,
-    email VARCHAR(40),
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    phone_number VARCHAR(11),
-    is_member BOOLEAN
-}
-
-
-
-create table member {
-    member_pk INT PRIMARY KEY,
-    customer_pk INT PRIMARY KEY,
-    FOREIGN KEY customer_pk 
-        REFERENCES customer(customer_pk),
-    member_level VARCHAR(10),
-    CONSTRAINT chk_member_level CHECK (member_level IN ('bronze', 'silver', 'gold', 'platinum', 'diamond')),
-    points INT
-}
-
-create table hotel_review {
-    review_pk INT PRIMARY KEY,
-    member_pk INT PRIMARY KEY,
-    FOREIGN KEY member
-        REFERENCES member(member_pk),
-    hotel_pk INT PRIMARY KEY,
-        REFERENCES hotel(hotel_pk),
-    stars DECIMAL(2,1),
-    CONSTRAINT chk_stars CHECK (5 > stars > 0),
-    review_content VARCHAR(500),
-    review_title VARCHAR(100),
+create table photo_set_path (
     photo_set_path_pk INT PRIMARY KEY,
-    FOREIGN KEY photo_set_path_pk 
-        REFERENCES photo_set_path(photo_set_path_pk)
-}
-
-create table travel_agent {
-    travel_agent_pk INT PRIMARY KEY,
-    travel_agency_pk INT PRIMARY KEY,
-    FOREIGN KEY travel_agency_pk
-        REFERENCES travel_agency(travel_agency_pk),
-    city VARCHAR(20) NOT NULL,
-    state VARCHAR(20) NOT NULL,
-    zip_code VARCHAR(9) NOT NULL,
-    phone_number VARCHAR(10) NOT NULL,
-    fax_number VARCHAR(10),
-    address VARCHAR(50) NOT NULL,
-}
-
-create table travel_agency {
-    travel_agency_pk INT PRIMARY KEY,
-    city VARCHAR(20) NOT NULL,
-    state VARCHAR(20) NOT NULL,
-    zip_code VARCHAR(9) NOT NULL,
-    phone_number VARCHAR(10) NOT NULL,
-    fax_number VARCHAR(10),
-    address VARCHAR(50) NOT NULL,
-}
-
-create table photo_set_path {
-    photo_set_path_pk INT PRIMARY,
-    FOREIGN KEY photo_set_path_pk 
-        REFERENCES hotel_review(photo_set_path_pk),
     image_1_path VARCHAR(255) NOT NULL,
     image_2_path VARCHAR(255) NOT NULL,
     image_3_path VARCHAR(255) NOT NULL,
     image_4_path VARCHAR(255) NOT NULL,
     image_5_path VARCHAR(255) NOT NULL
 
-}
+);
+
+create table hotel_review (
+    review_pk INT,
+    member_pk INT,
+    FOREIGN KEY (member_pk)
+        REFERENCES member(member_pk),
+    hotel_pk INT,
+    FOREIGN KEY (hotel_pk)
+        REFERENCES hotel(hotel_pk),
+	PRIMARY KEY(review_pk, member_pk, hotel_pk),
+    stars DECIMAL(2,1),
+    CONSTRAINT chk_stars CHECK (5 > stars > 0),
+    review_content VARCHAR(500),
+    review_title VARCHAR(100),
+    photo_set_path_pk INT,
+    FOREIGN KEY (photo_set_path_pk) 
+        REFERENCES photo_set_path(photo_set_path_pk)
+);
+
+create table travel_agency (
+    travel_agency_pk INT PRIMARY KEY,
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL,
+    phone_number VARCHAR(10) NOT NULL,
+    fax_number VARCHAR(10),
+    address VARCHAR(50) NOT NULL
+);
+
+create table travel_agent (
+    travel_agent_pk INT,
+    travel_agency_pk INT,
+    PRIMARY KEY (travel_agent_pk, travel_agency_pk),
+    FOREIGN KEY (travel_agency_pk)
+        REFERENCES travel_agency(travel_agency_pk),
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL,
+    phone_number VARCHAR(10) NOT NULL,
+    fax_number VARCHAR(10),
+    address VARCHAR(50) NOT NULL
+);
 
 insert into reservation VALUES ('1', '1', '1', '101', '11/20/2001 2:00', '11/21/2001', NULL, '1', '2', 'FALSE', 'FALSE')
 insert into hotel VALUES ('1', 'Parkway East', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
