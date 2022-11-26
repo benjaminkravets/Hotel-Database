@@ -129,7 +129,6 @@ create table customer (
 create table reservation (
     reservation_pk INT,
     hotel_pk INT,
-    PRIMARY KEY(reservation_pk, hotel_pk, suite_pk, customer_pk),
     FOREIGN KEY (hotel_pk)
         REFERENCES hotel(hotel_pk)
         ON DELETE CASCADE,
@@ -141,6 +140,7 @@ create table reservation (
     FOREIGN KEY (suite_pk)
         REFERENCES suite(suite_pk)
         ON DELETE CASCADE,
+    PRIMARY KEY(reservation_pk, hotel_pk, suite_pk, customer_pk),
     check_in_date DATETIME,
     check_out_date DATETIME,
     special_requests VARCHAR(300),
@@ -153,9 +153,9 @@ create table reservation (
 create table member (
     member_pk INT,
     customer_pk INT,
-    PRIMARY KEY(member_pk, customer_pk),
     FOREIGN KEY (customer_pk) 
         REFERENCES customer(customer_pk),
+    PRIMARY KEY(member_pk, customer_pk),
     member_level VARCHAR(10),
     CONSTRAINT chk_member_level CHECK (member_level IN ('bronze', 'silver', 'gold', 'platinum', 'diamond')),
     points INT
@@ -164,9 +164,9 @@ create table member (
 create table payment_method (
     payment_method_pk INT,
     member_pk INT,
-    PRIMARY KEY(payment_method_pk, member_pk),
     FOREIGN KEY (member_pk) 
         REFERENCES member(member_pk),
+    PRIMARY KEY(payment_method_pk, member_pk),
     credit_card_number VARCHAR(16),
     expiration_date DATETIME,
     security_code INT
@@ -176,9 +176,9 @@ create table payment_method (
 create table payment (
     payment_pk INT,
     reservation_pk INT,
-    PRIMARY KEY(payment_pk, reservation_pk),
     FOREIGN KEY (reservation_pk)
         REFERENCES reservation(reservation_pk),
+    PRIMARY KEY(payment_pk, reservation_pk),
     payment_method_pk INT,
     FOREIGN KEY (payment_method_pk)
         REFERENCES payment_method(payment_method_pk),
@@ -189,9 +189,9 @@ create table payment (
 create table franchise (
     franchise_pk INT,
     hotel_pk INT,
-    PRIMARY KEY(franchise_pk, hotel_pk),
     FOREIGN KEY (hotel_pk) 
         REFERENCES hotel(hotel_pk),
+    PRIMARY KEY(franchise_pk, hotel_pk),
     franchise_name VARCHAR(50),
     contact_name VARCHAR(50),
     phone_number VARCHAR(11),
@@ -210,9 +210,9 @@ create table employee_role (
 create table employee (
     employee_pk INT,
     franchise_pk INT,
-    PRIMARY KEY(employee_pk, franchise_pk),
     FOREIGN KEY (franchise_pk)
         REFERENCES franchise(franchise_pk),
+    PRIMARY KEY(employee_pk, franchise_pk),
     role_pk INT,
     FOREIGN KEY (role_pk)
         REFERENCES employee_role(role_pk),
@@ -280,9 +280,9 @@ create table travel_agency (
 create table travel_agent (
     travel_agent_pk INT,
     travel_agency_pk INT,
-    PRIMARY KEY (travel_agent_pk, travel_agency_pk),
     FOREIGN KEY (travel_agency_pk)
         REFERENCES travel_agency(travel_agency_pk),
+    PRIMARY KEY (travel_agent_pk, travel_agency_pk),
     city VARCHAR(20) NOT NULL,
     state VARCHAR(20) NOT NULL,
     zip_code VARCHAR(9) NOT NULL,
