@@ -5,16 +5,16 @@ use hotel_sys;
 
 create table hotel (
 	hotel_pk int PRIMARY KEY,
-    address VARCHAR(50) NOT NULL,
-    city VARCHAR(20) NOT NULL,
-    state VARCHAR(20) NOT NULL,
-    zip_code VARCHAR(9) NOT NULL,
-    phone_number VARCHAR(10) NOT NULL,
     fax_number VARCHAR(10),
     check_in_time TIME,
     check_out_time TIME,
     hotel_rating DECIMAL(2,1),
-    time_zone VARCHAR(4)
+    time_zone VARCHAR(4),
+    address VARCHAR(50) NOT NULL,
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL,
+    phone_number VARCHAR(10) NOT NULL
 );
 
 create table suite (
@@ -94,13 +94,14 @@ create table hotel_feature_list (
 create table common_destination (
 	destination_pk INT PRIMARY KEY,
 	destination_name varchar(50),
+    description varchar(500),
+    destination_type varchar(40),
+    CONSTRAINT chk_type CHECK (destination_type IN ('military_base', 'museum', 'school', 'airport', 'amusement_park', 'ski_resort')),
     address VARCHAR(50) NOT NULL,
     city VARCHAR(20) NOT NULL,
     state VARCHAR(20) NOT NULL,
     zip_code VARCHAR(9) NOT NULL,
-    description varchar(500),
-    destination_type varchar(40),
-    CONSTRAINT chk_type CHECK (destination_type IN ('military_base', 'museum', 'school', 'airport', 'amusement_park', 'ski_resort'))
+    phone_number VARCHAR(10) NOT NULL,
 );
 
 create table destination_proximity (
@@ -197,6 +198,11 @@ create table franchise (
     phone_number VARCHAR(11),
     email VARCHAR(40),
     fax_number varchar(11)
+    address VARCHAR(50) NOT NULL,
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL
+    
 );
 
 create table employee_role (
@@ -220,6 +226,10 @@ create table employee (
     last_name VARCHAR(30),
     phone_number VARCHAR(11),
     email VARCHAR(40)
+    address VARCHAR(50) NOT NULL,
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL
 );
 
 create table benefit_package (
@@ -269,12 +279,13 @@ create table hotel_review (
 
 create table travel_agency (
     travel_agency_pk INT PRIMARY KEY,
-    city VARCHAR(20) NOT NULL,
-    state VARCHAR(20) NOT NULL,
-    zip_code VARCHAR(9) NOT NULL,
     phone_number VARCHAR(10) NOT NULL,
     fax_number VARCHAR(10),
-    address VARCHAR(50) NOT NULL
+    address VARCHAR(50) NOT NULL,
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL
+    
 );
 
 create table travel_agent (
@@ -283,12 +294,12 @@ create table travel_agent (
     FOREIGN KEY (travel_agency_pk)
         REFERENCES travel_agency(travel_agency_pk),
     PRIMARY KEY (travel_agent_pk, travel_agency_pk),
-    city VARCHAR(20) NOT NULL,
-    state VARCHAR(20) NOT NULL,
-    zip_code VARCHAR(9) NOT NULL,
     phone_number VARCHAR(10) NOT NULL,
     fax_number VARCHAR(10),
-    address VARCHAR(50) NOT NULL
+    address VARCHAR(50) NOT NULL,
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL
 );
 
 insert into reservation VALUES ('1', '1', '1', '101', '11/20/2001 2:00', '11/21/2001', NULL, '1', '2', 'FALSE', 'FALSE')
