@@ -5,17 +5,20 @@ use hotel_sys;
 
 create table hotel (
 	hotel_pk int PRIMARY KEY,
-    fax_number VARCHAR(10),
     check_in_time TIME,
     check_out_time TIME,
     hotel_rating DECIMAL(2,1),
     time_zone VARCHAR(4),
+    fax_number VARCHAR(10),
+    phone_number VARCHAR(10) NOT NULL,
     address VARCHAR(50) NOT NULL,
     city VARCHAR(20) NOT NULL,
     state VARCHAR(20) NOT NULL,
-    zip_code VARCHAR(9) NOT NULL,
-    phone_number VARCHAR(10) NOT NULL
+    zip_code VARCHAR(9) NOT NULL
+    
 );
+
+insert into hotel VALUES ('1', '11:30', '1:30', '3.4', 'EDT', '8149772014', '8159772015', 'Parkway East', 'Bedford', 'PA', '15522');
 
 create table suite (
 	suite_pk INT,
@@ -41,6 +44,8 @@ create table suite (
     couch_converts BOOLEAN
 );
 
+insert into suite VALUES ('1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '2', '0','1','1','1');
+
 create table billing_multiplier_list (
 	hotel_pk INT PRIMARY KEY,
     FOREIGN KEY (hotel_pk) 
@@ -59,7 +64,12 @@ create table billing_multiplier_list (
     veteren_discount DECIMAL (4,3)
 );
 
+insert into billing_multiplier_list VALUES ('1', '1.05', '1.06', '15.00', '15.00', '150.00', '40.00', '.90', '.90', '.90', '.90', '.90');
+
 create table hotel_feature_list (
+	hotel_feature_list_pk INT PRIMARY KEY,
+    FOREIGN KEY (hotel_feature_list_pk)
+		REFERENCES hotel(hotel_pk),
 	allows_pets BOOLEAN,
     allows_smoking BOOLEAN,
     ev_charging BOOLEAN,
@@ -91,18 +101,23 @@ create table hotel_feature_list (
     cot_available BOOLEAN
 );
 
+insert into hotel_feature_list VALUES ('1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
+
 create table common_destination (
 	destination_pk INT PRIMARY KEY,
 	destination_name varchar(50),
     description varchar(500),
     destination_type varchar(40),
     CONSTRAINT chk_type CHECK (destination_type IN ('military_base', 'museum', 'school', 'airport', 'amusement_park', 'ski_resort')),
+    fax_number VARCHAR(10),
+    phone_number VARCHAR(10) NOT NULL,
     address VARCHAR(50) NOT NULL,
     city VARCHAR(20) NOT NULL,
     state VARCHAR(20) NOT NULL,
-    zip_code VARCHAR(9) NOT NULL,
-    phone_number VARCHAR(10) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL
 );
+
+insert into common_destination VALUES ('1', 'MOMA', 'Museaum of Modern Art', 'museum', '8159772015', '8159772015', 'Parkway East', 'Bedford', 'PA', '15522');
 
 create table destination_proximity (
 	proximity_pk INT PRIMARY KEY,
@@ -195,9 +210,9 @@ create table franchise (
     PRIMARY KEY(franchise_pk, hotel_pk),
     franchise_name VARCHAR(50),
     contact_name VARCHAR(50),
-    phone_number VARCHAR(11),
     email VARCHAR(40),
-    fax_number varchar(11)
+    fax_number VARCHAR(10),
+    phone_number VARCHAR(10) NOT NULL,
     address VARCHAR(50) NOT NULL,
     city VARCHAR(20) NOT NULL,
     state VARCHAR(20) NOT NULL,
@@ -224,8 +239,9 @@ create table employee (
         REFERENCES employee_role(role_pk),
     first_name VARCHAR(30),
     last_name VARCHAR(30),
-    phone_number VARCHAR(11),
-    email VARCHAR(40)
+    email VARCHAR(40),
+    fax_number VARCHAR(10),
+    phone_number VARCHAR(10) NOT NULL,
     address VARCHAR(50) NOT NULL,
     city VARCHAR(20) NOT NULL,
     state VARCHAR(20) NOT NULL,
@@ -279,8 +295,8 @@ create table hotel_review (
 
 create table travel_agency (
     travel_agency_pk INT PRIMARY KEY,
-    phone_number VARCHAR(10) NOT NULL,
     fax_number VARCHAR(10),
+    phone_number VARCHAR(10) NOT NULL,
     address VARCHAR(50) NOT NULL,
     city VARCHAR(20) NOT NULL,
     state VARCHAR(20) NOT NULL,
@@ -294,22 +310,13 @@ create table travel_agent (
     FOREIGN KEY (travel_agency_pk)
         REFERENCES travel_agency(travel_agency_pk),
     PRIMARY KEY (travel_agent_pk, travel_agency_pk),
-    phone_number VARCHAR(10) NOT NULL,
     fax_number VARCHAR(10),
+    phone_number VARCHAR(10) NOT NULL,
     address VARCHAR(50) NOT NULL,
     city VARCHAR(20) NOT NULL,
     state VARCHAR(20) NOT NULL,
     zip_code VARCHAR(9) NOT NULL
 );
 
-insert into reservation VALUES ('1', '1', '1', '101', '11/20/2001 2:00', '11/21/2001', NULL, '1', '2', 'FALSE', 'FALSE')
-insert into hotel VALUES ('1', 'Parkway East', 'Bedford', 'PA', '8149772014', '8149772015', '11:30', '1:30', '3.4', 'EDT');
-insert into suite values ('1', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, '2', '2', '2', FALSE);
-insert into billing_multiplier_list values ('1', '1.05', '1.03', '30', '20', '100', '70', '.90', '.90', '.85', '.90', '.90');
 
-delete from hotel where hotel_pk = 1;
-
-select * from hotel;
-select * from suite;
-select * from billing_multiplier_list;
 
