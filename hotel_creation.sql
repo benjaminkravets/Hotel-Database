@@ -133,6 +133,8 @@ create table destination_proximity (
 	
 );
 
+insert into destination_proximity VALUES ('1', '1', '1', '5.3');
+
 create table customer (
     customer_pk INT PRIMARY KEY,
     email VARCHAR(40),
@@ -141,6 +143,8 @@ create table customer (
     phone_number VARCHAR(11),
     is_member BOOLEAN
 );
+
+insert into customer VALUES ('1', 'santa@northpole.com', 'Saint', 'Nicholas', '9089022345', '1');
 
 create table reservation (
     reservation_pk INT,
