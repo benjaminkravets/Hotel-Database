@@ -44,7 +44,7 @@ create table suite (
     couch_converts BOOLEAN
 );
 
-insert into suite VALUES ('1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '2', '0','1','1','1');
+insert into suite VALUES ('101', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '2', '0','1','1','1');
 
 create table billing_multiplier_list (
 	hotel_pk INT PRIMARY KEY,
@@ -169,6 +169,8 @@ create table reservation (
     check_in_complete BOOLEAN,
     check_out_complete BOOLEAN
 );
+
+insert into reservation VALUES ('1', '1', '1', '101', '2023-1-4 2:00', '2023-1-7 12:00', 'Please hang a Cezanne in the bathroom', '2', '3', '0', '0');
 
 create table member (
     member_pk INT,
