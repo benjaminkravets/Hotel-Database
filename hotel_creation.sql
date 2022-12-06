@@ -3,8 +3,27 @@ DROP DATABASE IF EXISTS hotel_sys;
 create database hotel_sys;
 use hotel_sys;
 
+create table franchise (
+    franchise_pk INT PRIMARY KEY,
+    franchise_name VARCHAR(50),
+    contact_name VARCHAR(50),
+    email VARCHAR(40),
+    fax_number VARCHAR(10),
+    phone_number VARCHAR(10) NOT NULL,
+    address VARCHAR(50) NOT NULL,
+    city VARCHAR(20) NOT NULL,
+    state VARCHAR(20) NOT NULL,
+    zip_code VARCHAR(9) NOT NULL
+    
+);
+
+insert into franchise VALUES ('1', 'Fake Business', 'Timmy Turner', 'tturner@fakeinc.com', '8149572023', '8159772015', 'Parkway West', 'Linglestown', 'PA', '17123');
+
 create table hotel (
 	hotel_pk int PRIMARY KEY,
+    franchise INT,
+    FOREIGN KEY (franchise)
+        REFERENCES franchise(franchise_pk),
     check_in_time TIME,
     check_out_time TIME,
     hotel_rating DECIMAL(2,1),
@@ -18,7 +37,7 @@ create table hotel (
     
 );
 
-insert into hotel VALUES ('1', '11:30', '1:30', '3.4', 'EDT', '8149772014', '8159772015', 'Parkway East', 'Bedford', 'PA', '15522');
+insert into hotel VALUES ('1', '1', '11:30', '1:30', '3.4', 'EDT', '8149772014', '8159772015', 'Parkway East', 'Bedford', 'PA', '15522');
 
 create table suite (
 	suite_pk INT,
@@ -183,6 +202,8 @@ create table member (
     points INT
 );
 
+insert into member VALUES ('1', '1', 'silver', '13000');
+
 create table payment_method (
     payment_method_pk INT,
     member_pk INT,
@@ -190,10 +211,12 @@ create table payment_method (
         REFERENCES member(member_pk),
     PRIMARY KEY(payment_method_pk, member_pk),
     credit_card_number VARCHAR(16),
-    expiration_date DATETIME,
+    expiration_date DATE,
     security_code INT
 
 );
+
+insert into payment_method VALUES ('1', '1', '4485616510720807', '2024-09-03', '909');
 
 create table payment (
     payment_pk INT,
@@ -208,23 +231,7 @@ create table payment (
     price DECIMAL(6,2)
 );
 
-create table franchise (
-    franchise_pk INT,
-    hotel_pk INT,
-    FOREIGN KEY (hotel_pk) 
-        REFERENCES hotel(hotel_pk),
-    PRIMARY KEY(franchise_pk, hotel_pk),
-    franchise_name VARCHAR(50),
-    contact_name VARCHAR(50),
-    email VARCHAR(40),
-    fax_number VARCHAR(10),
-    phone_number VARCHAR(10) NOT NULL,
-    address VARCHAR(50) NOT NULL,
-    city VARCHAR(20) NOT NULL,
-    state VARCHAR(20) NOT NULL,
-    zip_code VARCHAR(9) NOT NULL
-    
-);
+insert into payment VALUES ('1', '1', '1', '1', '123.45');
 
 create table employee_role (
     role_pk INT PRIMARY KEY,
