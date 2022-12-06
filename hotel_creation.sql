@@ -238,8 +238,10 @@ create table employee_role (
     role_title VARCHAR(30),
     department VARCHAR(30),
     CONSTRAINT chk_dept CHECK (department IN ('management', 'cleaning', 'finance', 'clerk', 'maintainance')),
-    rol_description VARCHAR(50)
+    rol_description VARCHAR(200)
 );
+
+insert into employee_role VALUES ('1', 'Janitor', 'cleaning', 'Maintain order and cleanliness of hotel property rooms, common areas, and exterior');
 
 create table employee (
     employee_pk INT,
@@ -261,6 +263,8 @@ create table employee (
     zip_code VARCHAR(9) NOT NULL
 );
 
+insert into employee VALUES ('1', '1', '1', 'Bing', 'Crosby', 'bcrosby@gmail.com', '1234567890', '1234567890', 'Parkway North', 'Altoona', 'PA', '15682');
+
 create table benefit_package (
     employee_pk INT PRIMARY KEY,
     FOREIGN KEY (employee_pk)
@@ -271,12 +275,14 @@ create table benefit_package (
     paid_leave_days DECIMAL(4,1),
     vacation_days DECIMAL(4,1),
     contracted BOOLEAN,
-    401k_withholding DECIMAL(2,1),
-    401k_contribution DECIMAL(2,1),
-    fica_withholding DECIMAL(2,1),
-    futa_withholding DECIMAL(2,1),
-    suta_withholding DECIMAL(2,1)
+    401k_withholding DECIMAL(3,3),
+    401k_contribution DECIMAL(3,3),
+    fica_withholding DECIMAL(3,3),
+    futa_withholding DECIMAL(3,3),
+    suta_withholding DECIMAL(3,3)
 );
+
+insert into benefit_package VALUES ('1', '0', '25', '1', '4', '5', '0', '.05', '.05', '.03', '.04', '.1');
 
 create table photo_set_path (
     photo_set_path_pk INT PRIMARY KEY,
