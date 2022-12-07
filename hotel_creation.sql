@@ -286,13 +286,15 @@ insert into benefit_package VALUES ('1', '0', '25', '1', '4', '5', '0', '.05', '
 
 create table photo_set_path (
     photo_set_path_pk INT PRIMARY KEY,
-    image_1_path VARCHAR(255) NOT NULL,
-    image_2_path VARCHAR(255) NOT NULL,
-    image_3_path VARCHAR(255) NOT NULL,
-    image_4_path VARCHAR(255) NOT NULL,
-    image_5_path VARCHAR(255) NOT NULL
+    image_1_path VARCHAR(255),
+    image_2_path VARCHAR(255),
+    image_3_path VARCHAR(255),
+    image_4_path VARCHAR(255),
+    image_5_path VARCHAR(255) 
 
 );
+
+
 
 create table hotel_review (
     review_pk INT,
@@ -312,6 +314,8 @@ create table hotel_review (
         REFERENCES photo_set_path(photo_set_path_pk)
 );
 
+
+
 create table travel_agency (
     travel_agency_pk INT PRIMARY KEY,
     fax_number VARCHAR(10),
@@ -322,6 +326,8 @@ create table travel_agency (
     zip_code VARCHAR(9) NOT NULL
     
 );
+
+
 
 create table travel_agent (
     travel_agent_pk INT,
@@ -336,6 +342,11 @@ create table travel_agent (
     state VARCHAR(20) NOT NULL,
     zip_code VARCHAR(9) NOT NULL
 );
+
+insert into photo_set_path VALUES ('1', 'C:\Users\server\reviews\reviewphotos', 'C:\Users\server\reviews\reviewphotos', 'C:\Users\server\reviews\reviewphotos', 'C:\Users\server\reviews\reviewphotos', 'C:\Users\server\reviews\reviewphotos');
+insert into hotel_review VALUES ('1', '1', '1', '4.3', 'Nice hotel near the bedford springs, would recommend to passerbys', 'Clean and fair price', '1');
+insert into travel_agency VALUES ('1', '1246977890', '1234567890', 'Lemon Lane', 'Altoona', 'PA', '12382');
+insert into travel_agent VALUES ('1', '1', '1234567890', '1987657890', 'Shag Boulevard', 'Williamsport', 'VA', '15682');
 
 
 
