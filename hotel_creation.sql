@@ -17,8 +17,6 @@ create table franchise (
     
 );
 
-insert into franchise VALUES ('1', 'Fake Business', 'Timmy Turner', 'tturner@fakeinc.com', '8149572023', '8159772015', 'Parkway West', 'Linglestown', 'PA', '17123');
-
 create table hotel (
 	hotel_pk int PRIMARY KEY,
     franchise INT,
@@ -36,8 +34,6 @@ create table hotel (
     zip_code VARCHAR(9) NOT NULL
     
 );
-
-insert into hotel VALUES ('1', '1', '11:30', '1:30', '3.4', 'EDT', '8149772014', '8159772015', 'Parkway East', 'Bedford', 'PA', '15522');
 
 create table suite (
 	suite_pk INT,
@@ -63,8 +59,6 @@ create table suite (
     couch_converts BOOLEAN
 );
 
-insert into suite VALUES ('101', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '2', '0','1','1','1');
-
 create table billing_multiplier_list (
 	hotel_pk INT PRIMARY KEY,
     FOREIGN KEY (hotel_pk) 
@@ -82,8 +76,6 @@ create table billing_multiplier_list (
     government_discount DECIMAL (4,3),
     veteren_discount DECIMAL (4,3)
 );
-
-insert into billing_multiplier_list VALUES ('1', '1.05', '1.06', '15.00', '15.00', '150.00', '40.00', '.90', '.90', '.90', '.90', '.90');
 
 create table hotel_feature_list (
 	hotel_feature_list_pk INT PRIMARY KEY,
@@ -120,8 +112,6 @@ create table hotel_feature_list (
     cot_available BOOLEAN
 );
 
-insert into hotel_feature_list VALUES ('1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
-
 create table common_destination (
 	destination_pk INT PRIMARY KEY,
 	destination_name varchar(50),
@@ -135,8 +125,6 @@ create table common_destination (
     state VARCHAR(20) NOT NULL,
     zip_code VARCHAR(9) NOT NULL
 );
-
-insert into common_destination VALUES ('1', 'MOMA', 'Museaum of Modern Art', 'museum', '8159772015', '8159772015', 'Parkway East', 'Bedford', 'PA', '15522');
 
 create table destination_proximity (
 	proximity_pk INT PRIMARY KEY,
@@ -152,8 +140,6 @@ create table destination_proximity (
 	
 );
 
-insert into destination_proximity VALUES ('1', '1', '1', '5.3');
-
 create table customer (
     customer_pk INT PRIMARY KEY,
     email VARCHAR(40),
@@ -162,8 +148,6 @@ create table customer (
     phone_number VARCHAR(11),
     is_member BOOLEAN
 );
-
-insert into customer VALUES ('1', 'santa@northpole.com', 'Saint', 'Nicholas', '9089022345', '1');
 
 create table reservation (
     reservation_pk INT,
@@ -189,8 +173,6 @@ create table reservation (
     check_out_complete BOOLEAN
 );
 
-insert into reservation VALUES ('1', '1', '1', '101', '2023-1-4 2:00', '2023-1-7 12:00', 'Please hang a Cezanne in the bathroom', '2', '3', '0', '0');
-
 create table member (
     member_pk INT,
     customer_pk INT,
@@ -201,8 +183,6 @@ create table member (
     CONSTRAINT chk_member_level CHECK (member_level IN ('bronze', 'silver', 'gold', 'platinum', 'diamond')),
     points INT
 );
-
-insert into member VALUES ('1', '1', 'silver', '13000');
 
 create table payment_method (
     payment_method_pk INT,
@@ -215,8 +195,6 @@ create table payment_method (
     security_code INT
 
 );
-
-insert into payment_method VALUES ('1', '1', '4485616510720807', '2024-09-03', '909');
 
 create table payment (
     payment_pk INT,
@@ -231,8 +209,6 @@ create table payment (
     price DECIMAL(6,2)
 );
 
-insert into payment VALUES ('1', '1', '1', '1', '123.45');
-
 create table employee_role (
     role_pk INT PRIMARY KEY,
     role_title VARCHAR(30),
@@ -240,8 +216,6 @@ create table employee_role (
     CONSTRAINT chk_dept CHECK (department IN ('management', 'cleaning', 'finance', 'clerk', 'maintainance')),
     rol_description VARCHAR(200)
 );
-
-insert into employee_role VALUES ('1', 'Janitor', 'cleaning', 'Maintain order and cleanliness of hotel property rooms, common areas, and exterior');
 
 create table employee (
     employee_pk INT,
@@ -263,8 +237,6 @@ create table employee (
     zip_code VARCHAR(9) NOT NULL
 );
 
-insert into employee VALUES ('1', '1', '1', 'Bing', 'Crosby', 'bcrosby@gmail.com', '1234567890', '1234567890', 'Parkway North', 'Altoona', 'PA', '15682');
-
 create table benefit_package (
     employee_pk INT PRIMARY KEY,
     FOREIGN KEY (employee_pk)
@@ -282,8 +254,6 @@ create table benefit_package (
     suta_withholding DECIMAL(3,3)
 );
 
-insert into benefit_package VALUES ('1', '0', '25', '1', '4', '5', '0', '.05', '.05', '.03', '.04', '.1');
-
 create table photo_set_path (
     photo_set_path_pk INT PRIMARY KEY,
     image_1_path VARCHAR(255),
@@ -293,8 +263,6 @@ create table photo_set_path (
     image_5_path VARCHAR(255) 
 
 );
-
-
 
 create table hotel_review (
     review_pk INT,
@@ -314,8 +282,6 @@ create table hotel_review (
         REFERENCES photo_set_path(photo_set_path_pk)
 );
 
-
-
 create table travel_agency (
     travel_agency_pk INT PRIMARY KEY,
     fax_number VARCHAR(10),
@@ -326,8 +292,6 @@ create table travel_agency (
     zip_code VARCHAR(9) NOT NULL
     
 );
-
-
 
 create table travel_agent (
     travel_agent_pk INT,
@@ -343,7 +307,22 @@ create table travel_agent (
     zip_code VARCHAR(9) NOT NULL
 );
 
+insert into franchise VALUES ('1', 'Fake Business', 'Timmy Turner', 'tturner@fakeinc.com', '8149572023', '8159772015', 'Parkway West', 'Linglestown', 'PA', '17123');
+insert into hotel VALUES ('1', '1', '11:30', '1:30', '3.4', 'EDT', '8149772014', '8159772015', 'Parkway East', 'Bedford', 'PA', '15522');
+insert into suite VALUES ('101', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '2', '0','1','1','1');
+insert into billing_multiplier_list VALUES ('1', '1.05', '1.06', '15.00', '15.00', '150.00', '40.00', '.90', '.90', '.90', '.90', '.90');
+insert into hotel_feature_list VALUES ('1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
+insert into common_destination VALUES ('1', 'MOMA', 'Museaum of Modern Art', 'museum', '8159772015', '8159772015', 'Parkway East', 'Bedford', 'PA', '15522');
+insert into customer VALUES ('1', 'santa@northpole.com', 'Saint', 'Nicholas', '9089022345', '1');
+insert into member VALUES ('1', '1', 'silver', '13000');
+insert into reservation VALUES ('1', '1', '1', '101', '2023-1-4 2:00', '2023-1-7 12:00', 'Please hang a Cezanne in the bathroom', '2', '3', '0', '0');
+insert into payment_method VALUES ('1', '1', '4485616510720807', '2024-09-03', '909');
+insert into payment VALUES ('1', '1', '1', '1', '123.45');
+insert into destination_proximity VALUES ('1', '1', '1', '5.3');
+insert into employee_role VALUES ('1', 'Janitor', 'cleaning', 'Maintain order and cleanliness of hotel property rooms, common areas, and exterior');
+insert into employee VALUES ('1', '1', '1', 'Bing', 'Crosby', 'bcrosby@gmail.com', '1234567890', '1234567890', 'Parkway North', 'Altoona', 'PA', '15682');
 insert into photo_set_path VALUES ('1', 'C:\Users\server\reviews\reviewphotos', 'C:\Users\server\reviews\reviewphotos', 'C:\Users\server\reviews\reviewphotos', 'C:\Users\server\reviews\reviewphotos', 'C:\Users\server\reviews\reviewphotos');
+insert into benefit_package VALUES ('1', '0', '25', '1', '4', '5', '0', '.05', '.05', '.03', '.04', '.1');
 insert into hotel_review VALUES ('1', '1', '1', '4.3', 'Nice hotel near the bedford springs, would recommend to passerbys', 'Clean and fair price', '1');
 insert into travel_agency VALUES ('1', '1246977890', '1234567890', 'Lemon Lane', 'Altoona', 'PA', '12382');
 insert into travel_agent VALUES ('1', '1', '1234567890', '1987657890', 'Shag Boulevard', 'Williamsport', 'VA', '15682');
